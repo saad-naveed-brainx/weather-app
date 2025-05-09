@@ -1,0 +1,41 @@
+class WeatherModel {
+  final String cityName;
+  final String? Condition;
+  final double temperature;
+  final double feelsLike;
+  final int humidity;
+  final int visibility;
+  final int unixTime;
+  final int timezone;
+  final DateTime? actualDate;
+  final int? seaLevel;
+
+  WeatherModel({
+    required this.cityName,
+    required this.temperature,
+    required this.feelsLike,
+    required this.humidity,
+    required this.visibility,
+    required this.unixTime,
+    required this.timezone,
+    required this.actualDate,
+    required this.Condition,
+    this.seaLevel,
+  });
+
+  factory WeatherModel.fromJson(Map<String, dynamic> json) {
+    WeatherModel model = WeatherModel(
+      cityName: json['name'],
+      temperature: (json['main']['temp'] as num).toDouble(),
+      feelsLike: (json['main']['feels_like'] as num).toDouble(),
+      humidity: json['main']['humidity'],
+      visibility: json['visibility'],
+      unixTime: json['dt'],
+      timezone: json['timezone'],
+      actualDate: DateTime.fromMillisecondsSinceEpoch(json['dt'] * 1000),
+      Condition: json['weather'][0]['main'],
+      seaLevel: json['main']['sea_level'],
+    );
+    return model;
+  }
+}
